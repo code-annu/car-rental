@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/output.css" />
+    <title>Car detials</title>
+  </head>
+  <body>
+    <%- include ('../partials/header') %>
+    <div class="container mx-auto px-4 py-8">
+      <h1 class="text-3xl font-bold mb-8 text-center">Car Details</h1>
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+        <img
+          src="<%= car.image_url %>"
+          alt="<%= car.brand_name %> <%= car.model_name %>"
+          class="object-cover"
+        />
+        <div class="p-6">
+          <h2 class="text-xl font-semibold mb-2">
+            <%= car.brand_name %>
+            <span class="text-gray-500 font-normal"><%= car.model_name %></span>
+          </h2>
+          <p class="text-lg font-bold text-green-600 mb-4">$<%= car.price %></p>
+          <p class="text-gray-700 mb-4"><%= car.description %></p>
+          <button
+            class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition-colors"
+          >
+            Book Now
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

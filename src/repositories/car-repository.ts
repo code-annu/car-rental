@@ -27,7 +27,6 @@ export class CarRepository {
       [carId]
     );
     const cars = rows as Car[];
-    console.log("Result find is: ", cars);
     return cars[0] || null;
   }
 
