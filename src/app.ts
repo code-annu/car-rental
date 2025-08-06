@@ -2,8 +2,9 @@ import express, { Express, Request, Response } from "express";
 import path from "path";
 import { homeRouter } from "./routes/home-router";
 import { carRouter } from "./routes/car-router";
-import { CarRepository } from "./repositories/car-repository";
-import { Car } from "./models/car-model";
+import { User } from "./models/user-model";
+import { UserService } from "./service/user-service";
+import { authRouter } from "./routes/auth-router";
 
 const app: Express = express();
 const PORT = 3000;
@@ -15,17 +16,20 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(homeRouter);
 app.use(carRouter);
+app.use(authRouter);
 
-app.get("/test", (req: Request, res: Response) => {
-  const carRepo = new CarRepository();
-  const car: Car = {
-    brandName: "Jaguar",
-    modelName: "X6",
-    price: 120.12,
-    imageUrl: "http://jaguar.com",
+app.get("/test", async (req: Request, res: Response) => {
+  const userService = new UserService();
+  const user: User = {
+    username: "anurag",
+    email: "anurag@gmail.com",
+    password: "12345678",
+    role: "user",
   };
-  carRepo.delete(3);
-  res.send("done.");
+
+  // const result = await userService.registerNewUser(user);
+  const result = await userService.loginUser("anurag", "12345678");
+  res.send(result);
 });
 
 app.listen(PORT, () => {
