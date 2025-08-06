@@ -15,6 +15,7 @@ export class CarController {
   }
 
   async getAllCars(req: Request, res: Response) {
+    console.log('req.session', req.session);
     const cars = await this.carService.getAllCars();
     res.render("pages/car-list", { cars });
   }

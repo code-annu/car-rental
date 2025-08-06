@@ -1,6 +1,8 @@
+import { SessionData } from "express-session";
 import { User } from "../models/user-model";
 import { UserService } from "../service/user-service";
 import { Response, Request } from "express";
+import { ISession } from "../types/express-session";
 
 export class AuthController {
   private userService = new UserService();
@@ -37,7 +39,18 @@ export class AuthController {
     const user = await this.userService.loginUser(username, password);
 
     if (user) {
-      console.log("Login successful for user: ", user);
+      console.log("User logged in: ", user);
+      const userId = user.userId!;
+      const role = user.role!;
+      // (req.session as ISession).role = role;
+      (req.session as ISession).userId = userId;
+      (req.session as ISession).save((err) => {
+        if (err) {
+          console.error("Session save error: ", err);
+          return res.status(500).send("Internal server error");
+        }
+      });
+      console.log("Session updated with userId and role");
       res.redirect("/"); // Redirect to home or dashboard after successful login
     } else {
       console.log("Login failed for username: ", username);
